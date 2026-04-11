@@ -1,9 +1,10 @@
-from supabase_client import supabase
+from supabase_client import get_supabase
 from datetime import datetime
 import csv
 import os
 
 # Get all contacts
+supabase = get_supabase()
 contacts = supabase.table("contacts").select("*").execute().data
 
 total_contacts = len(contacts)

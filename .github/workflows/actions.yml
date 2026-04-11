@@ -1,0 +1,39 @@
+name: Daily Contact Logger
+
+on:
+  schedule:
+    - cron: "0 8 * * *"
+  workflow_dispatch:
+
+jobs:
+  run-daily-script:
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.11"
+
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+
+    - name: Run daily script
+      env:
+        SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+        SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+      run: |
+        python daily.py
+
+    - name: Commit updates
+      run: |
+        git config --global user.name "github-actions"
+        git config --global user.email "actions@github.com"
+        git add .
+        git commit -m "Daily update"
+        git push

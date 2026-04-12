@@ -1,11 +1,16 @@
 import os
 from dotenv import load_dotenv
 load_dotenv()   
-from supabase import create_client, Client
+from supabase import create_client
 
-url: str = os.environ["SUPABASE_URL"]
-key: str = os.environ["SUPABASE_KEY"]
-supabase: Client = create_client(url, key)
+def get_supabase():
+    url = os.environ["SUPABASE_URL"]
+    key = os.environ["SUPABASE_KEY"]
+    return create_client(url, key)
+
+# url: str = os.environ["SUPABASE_URL"]
+# key: str = os.environ["SUPABASE_KEY"]
+# supabase: Client = create_client(url, key)
 
 
 # name = str(input("Enter a todo"))

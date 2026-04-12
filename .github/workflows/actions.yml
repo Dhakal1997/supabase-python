@@ -23,12 +23,20 @@ jobs:
       run: |
         pip install -r requirements.txt
 
+    - name: Debug env
+      run: |
+        echo "Checking environment variables..."
+        echo "SUPABASE_URL=$SUPABASE_URL"
+        echo "SUPABASE_KEY is set? ${{ secrets.SUPABASE_KEY != '' }}"
+
     - name: Run daily script
       env:
         SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
         SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
       run: |
         python daily.py
+
+
 
     - name: Commit updates
       run: |

@@ -6,8 +6,10 @@ import os
 # Get all contacts
 supabase = get_supabase()
 contacts = supabase.table("contacts").select("*").execute().data
+todos = supabase.table("todo").select("*").execute().data
 
 total_contacts = len(contacts)
+t_todos= len(todos)
 
 # Current date and time
 now = datetime.now()
@@ -24,8 +26,8 @@ with open(file_name, "a", newline="") as file:
 
     # write header if file does not exist
     if not file_exists:
-        writer.writerow(["Date", "Time", "Total Contacts"])
+        writer.writerow(["Date", "Time", "Total Contacts","t_todos"])
 
-    writer.writerow([date, time, total_contacts])
+    writer.writerow([date, time, total_contacts, t_todos])
 
 print("Daily log updated successfully")
